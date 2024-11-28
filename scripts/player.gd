@@ -7,8 +7,8 @@ signal reached_goal
 @export var view: Node3D
 
 @export_subgroup("Properties")
-@export var movement_speed = 250
-@export var jump_strength = 7
+@export var movement_speed = 300
+@export var jump_strength = 8
 
 var movement_velocity: Vector3
 var rotation_direction: float

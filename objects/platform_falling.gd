@@ -33,7 +33,7 @@ func _process(delta):
 		scale = scale.lerp(Vector3(1, 1, 1), delta * 10) # Animate scale
 
 	if falling:
-		gravity += 0.25
+		gravity += 0.15
 
 func restore_platform() -> void:
 	global_position = starting_pos
