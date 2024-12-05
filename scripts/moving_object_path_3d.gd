@@ -4,7 +4,7 @@ extends Path3D
 @onready var remote_transform_3d: RemoteTransform3D = $PathFollow3D/RemoteTransform3D
 
 @export var object_to_move : Node
-@export var movement_speed : float = 1.0
+@export var movement_speed : float = 10.0
 @export var is_on_from_start : bool = true
 @export var look_at_object_when_activated : bool
 @export var ping_pong : bool

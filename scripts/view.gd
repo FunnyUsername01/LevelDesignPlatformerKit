@@ -4,8 +4,8 @@ extends Node3D
 @export var target: Node
 
 @export_group("Zoom")
-@export var zoom_minimum = 16
-@export var zoom_maximum = 4
+@export var zoom_minimum = 25
+@export var zoom_maximum = 100
 @export var zoom_speed = 10
 @export var default_zoom = 10
 @export var camera_angle_min : float = -80
@@ -15,7 +15,7 @@ extends Node3D
 @export var rotation_speed = 120
 
 var camera_rotation:Vector3
-var zoom : float = 10.0
+var zoom : float = 50.0
 var look_at_player : bool = true
 var secondary_target : Node
 
