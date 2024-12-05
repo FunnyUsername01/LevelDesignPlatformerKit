@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://b5pb44ib7wjyt"]
+[gd_scene load_steps=26 format=3 uid="uid://b5pb44ib7wjyt"]
 
 [ext_resource type="Environment" uid="uid://bqnqgflivjvue" path="res://scenes/main-environment.tres" id="1_bi504"]
 [ext_resource type="PackedScene" uid="uid://dl2ed4gkybggf" path="res://objects/player.tscn" id="2_8ceik"]
@@ -44,7 +44,14 @@ shadow_offset = Vector2(2, 2)
 
 [sub_resource type="Curve3D" id="Curve3D_gq27i"]
 _data = {
-"points": PackedVector3Array(0, 0, 0, 0, 0, 0, -8.294, 3, -23, 0, 0, 0, 0, 0, 0, -3, 3, -23),
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, -8, 3, -23, 0, 0, 0, 0, 0, 0, -3, 3, -23),
+"tilts": PackedFloat32Array(0, 0)
+}
+point_count = 2
+
+[sub_resource type="Curve3D" id="Curve3D_fsvxy"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 6, 3, -23, 0, 0, 0, 0, 0, 0, 1, 3, -23),
 "tilts": PackedFloat32Array(0, 0)
 }
 point_count = 2
@@ -254,11 +261,17 @@ vertical_alignment = 1
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.4, 3, -23)
 
 [node name="platform-moving2" parent="." instance=ExtResource("18_xpm53")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.074, 3, -23)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 3, -23)
 
 [node name="moving_object_path" parent="." node_paths=PackedStringArray("object_to_move") instance=ExtResource("19_6dvqp")]
 curve = SubResource("Curve3D_gq27i")
 object_to_move = NodePath("../platform-moving")
+movement_speed = 4.0
+ping_pong = true
+
+[node name="moving_object_path2" parent="." node_paths=PackedStringArray("object_to_move") instance=ExtResource("19_6dvqp")]
+curve = SubResource("Curve3D_fsvxy")
+object_to_move = NodePath("../platform-moving2")
 movement_speed = 4.0
 ping_pong = true
 
