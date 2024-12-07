@@ -1,5 +1,5 @@
 extends Node3D
-@export var trampoline_strength : float = 10
+@export var trampoline_strength : float = 12
 @onready var trampoline_audio_stream_player_3d: AudioStreamPlayer3D = $TrampolineAudioStreamPlayer3D
 @onready var trampoline_animation_player: AnimationPlayer = $TrampolineAnimationPlayer
 
