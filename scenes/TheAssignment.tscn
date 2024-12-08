@@ -340,9 +340,6 @@ metadata/_edit_group_ = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -51, 18.4525, -29)
 metadata/_edit_group_ = true
 
-[node name="platform-falling" parent="." instance=ExtResource("16_5m0ty")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -54.9948, 18, -26)
-
 [node name="spike-block-wide3" parent="." instance=ExtResource("23_5lgry")]
 transform = Transform3D(-2.18557e-07, 0, 1, 0, 1, 0, -1, 0, -2.18557e-07, -76, 19, -29)
 
