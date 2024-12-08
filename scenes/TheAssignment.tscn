@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://b5pb44ib7wjyt"]
+[gd_scene load_steps=30 format=3 uid="uid://b5pb44ib7wjyt"]
 
 [ext_resource type="Environment" uid="uid://bqnqgflivjvue" path="res://scenes/main-environment.tres" id="1_bi504"]
 [ext_resource type="PackedScene" uid="uid://dl2ed4gkybggf" path="res://objects/player.tscn" id="2_8ceik"]
@@ -55,6 +55,13 @@ point_count = 2
 [sub_resource type="Curve3D" id="Curve3D_fsvxy"]
 _data = {
 "points": PackedVector3Array(0, 0, 0, 0, 0, 0, -30, 3, -23, 0, 0, 0, 0, 0, 0, -25, 3, -23),
+"tilts": PackedFloat32Array(0, 0)
+}
+point_count = 2
+
+[sub_resource type="Curve3D" id="Curve3D_8x1f0"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, -55, 18, -29, 0, 0, 0, 0, 0, 0, -71, 18, -29),
 "tilts": PackedFloat32Array(0, 0)
 }
 point_count = 2
@@ -319,6 +326,15 @@ metadata/_edit_group_ = true
 [node name="trampoline" parent="platform" instance=ExtResource("20_la737")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 
+[node name="moving_object_path3" parent="." node_paths=PackedStringArray("object_to_move") instance=ExtResource("19_6dvqp")]
+curve = SubResource("Curve3D_8x1f0")
+object_to_move = NodePath("../platform-moving3")
+movement_speed = 7.0
+ping_pong = true
+
+[node name="platform-moving3" parent="." instance=ExtResource("18_xpm53")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -55, 18, -29)
+
 [node name="platform-medium" parent="." instance=ExtResource("17_d6rxb")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -51, 18, -29)
 metadata/_edit_group_ = true
@@ -326,6 +342,9 @@ metadata/_edit_group_ = true
 [node name="checkpoint2" parent="." instance=ExtResource("9_h6b7l")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -51, 18.4525, -29)
 metadata/_edit_group_ = true
+
+[node name="platform-falling" parent="." instance=ExtResource("16_5m0ty")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -54.9948, 18, -26)
 
 [connection signal="coin_collected" from="Player" to="HUD" method="_on_coin_collected"]
 [connection signal="reached_goal" from="Player" to="HUD" method="_on_player_reached_goal"]
