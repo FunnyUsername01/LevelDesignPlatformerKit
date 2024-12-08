@@ -67,7 +67,7 @@ environment = ExtResource("1_bi504")
 camera_attributes = SubResource("CameraAttributesPractical_u8ojw")
 
 [node name="Player" parent="." node_paths=PackedStringArray("view") instance=ExtResource("2_8ceik")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -39, 4.5, -25)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.586532, 1.20923, -0.739645)
 view = NodePath("../View")
 
 [node name="View" type="Node3D" parent="." node_paths=PackedStringArray("target") groups=["View"]]
@@ -292,39 +292,39 @@ ping_pong = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35.9858, 4.5, -23.0744)
 
 [node name="platform4" parent="." instance=ExtResource("23_xv844")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -44.48, 17, -27.898)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -47.48, 16.5, -31.898)
 metadata/_edit_group_ = true
 
 [node name="trampoline" parent="platform4" instance=ExtResource("20_la737")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 
 [node name="platform3" parent="." instance=ExtResource("23_xv844")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -40.48, 14, -28.898)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -45.48, 13.5, -28.898)
 metadata/_edit_group_ = true
 
 [node name="trampoline" parent="platform3" instance=ExtResource("20_la737")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 
 [node name="platform2" parent="." instance=ExtResource("23_xv844")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -41.48, 11, -31.898)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -43.48, 10.5, -31.898)
 metadata/_edit_group_ = true
 
 [node name="trampoline" parent="platform2" instance=ExtResource("20_la737")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 
 [node name="platform" parent="." instance=ExtResource("23_xv844")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -43.48, 8, -28.898)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -43.48, 7.5, -28.898)
 metadata/_edit_group_ = true
 
 [node name="trampoline" parent="platform" instance=ExtResource("20_la737")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 
 [node name="platform-medium" parent="." instance=ExtResource("17_d6rxb")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -49, 18, -28)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -51, 18, -29)
 metadata/_edit_group_ = true
 
 [node name="checkpoint2" parent="." instance=ExtResource("9_h6b7l")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -49, 18.4525, -28)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -51, 18.4525, -29)
 metadata/_edit_group_ = true
 
 [connection signal="coin_collected" from="Player" to="HUD" method="_on_coin_collected"]
