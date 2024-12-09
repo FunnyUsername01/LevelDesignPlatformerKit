@@ -43,6 +43,7 @@ func restore_platform() -> void:
 
 func _on_body_entered(_body):
 	if !falling:
+		await get_tree().create_timer(.25).timeout
 		Audio.play("res://sounds/fall.ogg") # Play sound
 		scale = Vector3(1.25, 1, 1.25) # Animate scale
 		

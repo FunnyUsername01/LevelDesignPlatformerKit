@@ -8,7 +8,7 @@ signal reached_goal
 
 @export_subgroup("Properties")
 @export var movement_speed = 300
-@export var jump_strength = 8
+@export var jump_strength = 9.5
 
 var movement_velocity: Vector3
 var rotation_direction: float
