@@ -155,6 +155,7 @@ func collect_coin():
 	coins += 1
 
 	coin_collected.emit(coins)
+	#jump_double = true
 	
 func touched_goal() -> void:
 	reached_goal.emit()
