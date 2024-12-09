@@ -1,7 +1,7 @@
 extends Node3D
 
 @export var respawn : bool = true
-@export var respawn_delay : float = 2.0
+@export var respawn_delay : float = 1.0
 @onready var platform_falling_collision_shape_3d: CollisionShape3D = %"platform-falling_collisionShape3D"
 @onready var platform_falling_2: MeshInstance3D = $"platform-falling2"
 @onready var falling_platform_animation_player: AnimationPlayer = $FallingPlatformAnimationPlayer
@@ -43,7 +43,7 @@ func restore_platform() -> void:
 
 func _on_body_entered(_body):
 	if !falling:
-		await get_tree().create_timer(.25).timeout
+		await get_tree().create_timer(.28).timeout
 		Audio.play("res://sounds/fall.ogg") # Play sound
 		scale = Vector3(1.25, 1, 1.25) # Animate scale
 		

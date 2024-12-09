@@ -1,6 +1,6 @@
 @tool
 extends Node3D
-@export var death_height : float = -10
+@export var death_height : float = -1
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
