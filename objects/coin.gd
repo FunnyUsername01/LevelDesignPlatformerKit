@@ -2,6 +2,10 @@ extends Area3D
 
 var time := 0.0
 var grabbed := false
+var respawn_sequence_started : bool = false
+
+@export var respawn : bool = true
+@export var respawn_delay : float = 1.0
 
 # Collecting coins
 
