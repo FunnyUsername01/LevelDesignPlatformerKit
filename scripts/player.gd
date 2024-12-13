@@ -160,11 +160,9 @@ func jump():
 
 func collect_coin():
 	if jump_double:
-		print("you already have jumps")
 		coins +- 2
 		coin_collected.emit(coins)
 	else:
-		print("you don't have any jumps")
 		jump_double = true
 		coins = 1
 		coin_collected.emit(coins)
