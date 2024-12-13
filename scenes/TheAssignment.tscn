@@ -227,19 +227,19 @@ metadata/_edit_use_anchors_ = true
 
 [node name="Icon" type="TextureRect" parent="HUD/Control"]
 layout_mode = 0
-offset_left = 57.0
-offset_top = 67.0
-offset_right = 313.0
-offset_bottom = 323.0
+offset_left = 157.0
+offset_top = 19.0
+offset_right = 413.0
+offset_bottom = 275.0
 scale = Vector2(0.2, 0.2)
 texture = ExtResource("23_7dev4")
 
 [node name="x" type="Label" parent="HUD/Control"]
 layout_mode = 0
-offset_left = 112.0
-offset_top = 64.0
-offset_right = 144.0
-offset_bottom = 123.0
+offset_left = 208.0
+offset_top = 16.0
+offset_right = 240.0
+offset_bottom = 75.0
 text = "×"
 label_settings = ExtResource("24_e1jku")
 
@@ -260,10 +260,10 @@ label_settings = SubResource("LabelSettings_ri8jt")
 [node name="CoinsLabel" type="Label" parent="HUD/Control"]
 unique_name_in_owner = true
 layout_mode = 0
-offset_left = 144.0
-offset_top = 64.0
-offset_right = 368.0
-offset_bottom = 123.0
+offset_left = 243.0
+offset_top = 15.0
+offset_right = 467.0
+offset_bottom = 74.0
 text = "2"
 label_settings = ExtResource("24_e1jku")
 
@@ -326,6 +326,15 @@ vertical_alignment = 1
 
 [node name="coin" parent="HUD/Control" instance=ExtResource("8_gb8cq")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 68, 1, 34)
+
+[node name="Label" type="Label" parent="HUD/Control"]
+layout_mode = 0
+offset_left = 22.0
+offset_top = 14.0
+offset_right = 156.0
+offset_bottom = 70.0
+text = "Jumps"
+label_settings = ExtResource("24_e1jku")
 
 [node name="platform-moving" parent="." instance=ExtResource("18_xpm53")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 12, -23)
