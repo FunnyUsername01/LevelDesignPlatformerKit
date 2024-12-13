@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://b5pb44ib7wjyt"]
+[gd_scene load_steps=33 format=3 uid="uid://b5pb44ib7wjyt"]
 
 [ext_resource type="Environment" uid="uid://bqnqgflivjvue" path="res://scenes/main-environment.tres" id="1_bi504"]
 [ext_resource type="PackedScene" uid="uid://dl2ed4gkybggf" path="res://objects/player.tscn" id="2_8ceik"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://dfpisimsgf5ce" path="res://objects/coin.tscn" id="8_gb8cq"]
 [ext_resource type="PackedScene" uid="uid://cyvet7kb6y80r" path="res://objects/checkpoint.tscn" id="9_h6b7l"]
 [ext_resource type="PackedScene" uid="uid://bdm3quh21j64k" path="res://objects/platform_large.tscn" id="12_7e1q3"]
+[ext_resource type="PackedScene" uid="uid://bd4kg30p7qj0g" path="res://objects/coin_spawner.tscn" id="13_hwt3x"]
 [ext_resource type="PackedScene" uid="uid://cxea8lmw7cy1l" path="res://objects/player_kill_volume.tscn" id="14_ca476"]
 [ext_resource type="PackedScene" uid="uid://c8up71en5djgm" path="res://objects/platform_falling.tscn" id="16_5m0ty"]
 [ext_resource type="PackedScene" uid="uid://rjh4ifidqrfp" path="res://objects/platform_medium.tscn" id="17_d6rxb"]
@@ -206,6 +207,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -40.0003, 13.0192, -22.9412)
 
 [node name="trampoline" parent="World/platform-large" instance=ExtResource("20_la737")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0.60543, -0.8962)
+
+[node name="CoinSpawner" parent="World" instance=ExtResource("13_hwt3x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 73, 1, 35)
+coin_scene = ExtResource("8_gb8cq")
 
 [node name="Sun" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.422618, -0.694272, 0.582563, 0, 0.642788, 0.766044, -0.906308, 0.323744, -0.271654, 0, 0, 0)

@@ -18,7 +18,8 @@ func _on_body_entered(body):
 		$Particles.emitting = false # Stop emitting stars
 		
 		grabbed = true
-		
+		await get_tree().create_timer(.25).timeout
+		queue_free()
 		
 
 
