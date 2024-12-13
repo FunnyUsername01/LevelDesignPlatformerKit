@@ -19,7 +19,7 @@ var previously_floored = false
 var jump_single = true
 var jump_double = true
 
-var coins = 0
+var coins = 2
 var latest_checkpoint : Vector3
 
 @onready var particles_trail = $ParticlesTrail
@@ -67,6 +67,8 @@ func _physics_process(delta):
 	if is_on_floor() and gravity > 2 and !previously_floored:
 		model.scale = Vector3(1.25, 0.75, 1.25)
 		Audio.play("res://sounds/land.ogg")
+		coins = 2
+		coin_collected.emit(coins)
 
 	previously_floored = is_on_floor()
 
@@ -145,17 +147,29 @@ func jump():
 	if jump_single:
 		jump_single = false;
 		jump_double = true;
+		
+		coins -= 1
+		coin_collected.emit(coins)
 	else:
 		jump_double = false;
+		
+		coins -= 1
+		coin_collected.emit(coins)
 
 # Collecting coins
 
 func collect_coin():
-
-	coins += 1
-
-	coin_collected.emit(coins)
-	jump_double = true
+	if jump_double:
+		print("you already have jumps")
+		coins +- 2
+		coin_collected.emit(coins)
+	else:
+		print("you don't have any jumps")
+		jump_double = true
+		coins = 1
+		coin_collected.emit(coins)
+	
+	
 	
 func touched_goal() -> void:
 	reached_goal.emit()
