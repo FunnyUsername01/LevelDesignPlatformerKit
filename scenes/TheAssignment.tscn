@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://b5pb44ib7wjyt"]
+[gd_scene load_steps=34 format=3 uid="uid://b5pb44ib7wjyt"]
 
 [ext_resource type="Environment" uid="uid://bqnqgflivjvue" path="res://scenes/main-environment.tres" id="1_bi504"]
 [ext_resource type="PackedScene" uid="uid://dl2ed4gkybggf" path="res://objects/player.tscn" id="2_8ceik"]
@@ -48,6 +48,20 @@ _data = {
 }
 point_count = 2
 
+[sub_resource type="Curve3D" id="Curve3D_w0s18"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, -88.207, 14, -36.78, 0, 0, 0, 0, 0, 0, -97.245, 14, -36.78),
+"tilts": PackedFloat32Array(0, 0)
+}
+point_count = 2
+
+[sub_resource type="Curve3D" id="Curve3D_0hq60"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, -61, 15, -36.78, 0, 0, 0, 0, 0, 0, -72, 15, -36.78),
+"tilts": PackedFloat32Array(0, 0)
+}
+point_count = 2
+
 [sub_resource type="LabelSettings" id="LabelSettings_ri8jt"]
 font = ExtResource("25_fbkjv")
 font_size = 128
@@ -73,13 +87,6 @@ albedo_color = Color(0.999998, 0.99695, 0.675933, 1)
 emission_enabled = true
 emission = Color(0.96384, 0.964172, 0.923152, 1)
 emission_energy_multiplier = 16.0
-
-[sub_resource type="Curve3D" id="Curve3D_0hq60"]
-_data = {
-"points": PackedVector3Array(0, 0, 0, 0, 0, 0, -61, 15, -36.78, 0, 0, 0, 0, 0, 0, -72, 15, -36.78),
-"tilts": PackedFloat32Array(0, 0)
-}
-point_count = 2
 
 [node name="Main" type="Node3D"]
 
@@ -193,10 +200,40 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.5144, 9, -10.6171)
 [node name="platform-falling27" parent="World/FallingPlatforms" instance=ExtResource("16_5m0ty")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.5144, 9, 43.0022)
 
+[node name="platform-falling32" parent="World/FallingPlatforms" instance=ExtResource("16_5m0ty")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -82.613, 14, -36.7778)
+
+[node name="platform-falling31" parent="World/FallingPlatforms" instance=ExtResource("16_5m0ty")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -79.8332, 14, -36.7778)
+
+[node name="platform-falling28" parent="World/FallingPlatforms" instance=ExtResource("16_5m0ty")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -74.8979, 14, -36.7778)
+
+[node name="platform-falling29" parent="World/FallingPlatforms" instance=ExtResource("16_5m0ty")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -72.6923, 14.0564, -36.7619)
+
+[node name="platform-falling28" parent="World/FallingPlatforms/platform-falling29" instance=ExtResource("16_5m0ty")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -74.8979, 14, -36.7778)
+
+[node name="platform-falling29" parent="World/FallingPlatforms/platform-falling29" instance=ExtResource("16_5m0ty")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -72.6923, 14.0564, -36.7619)
+
+[node name="platform-falling30" parent="World/FallingPlatforms" instance=ExtResource("16_5m0ty")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -70.4856, 14, -36.7778)
+
+[node name="checkpoint" parent="World/FallingPlatforms" instance=ExtResource("9_h6b7l")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -77.0931, 14.5, -36.8397)
+
 [node name="Moving_Platforms" type="Node3D" parent="World"]
 
 [node name="platform-moving" parent="World/Moving_Platforms" instance=ExtResource("18_xpm53")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 9, -8)
+
+[node name="platform-moving2" parent="World/Moving_Platforms" instance=ExtResource("18_xpm53")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -88.8106, 14, -36.78)
+
+[node name="trampoline" parent="World/Moving_Platforms/platform-moving2" instance=ExtResource("20_la737")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.608717, 0)
 
 [node name="Static_Platforms" type="Node3D" parent="World"]
 
@@ -355,15 +392,6 @@ transform = Transform3D(0.0123217, 0, -0.999924, 0, 1, 0, 0.999924, 0, 0.0123217
 [node name="spike-block-wide8" parent="World/Spike_Blocks/spike-block-wide8" instance=ExtResource("23_5lgry")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.38419e-07, 0, -3)
 
-[node name="spike-block-wide3" parent="World/Spike_Blocks" instance=ExtResource("23_5lgry")]
-transform = Transform3D(-2.18557e-07, 0, 1, 0, 1, 0, -1, 0, -2.18557e-07, -66.5708, 23, -17.5212)
-
-[node name="spike-block-wide2" parent="World/Spike_Blocks" instance=ExtResource("23_5lgry")]
-transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -59.5708, 23, -17.5212)
-
-[node name="spike-block-wide" parent="World/Spike_Blocks" instance=ExtResource("23_5lgry")]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -52.5708, 23, -17.5212)
-
 [node name="spike-block-wide9" parent="World/Spike_Blocks" instance=ExtResource("23_5lgry")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 14.3174, 11.4842, -28.1137)
 
@@ -406,6 +434,15 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 9, -16.6193)
 [node name="spike-block-wide17" parent="World/Spike_Blocks" instance=ExtResource("23_5lgry")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 9, -12.6193)
 
+[node name="TRIO_SpikeBlock_1" parent="World/Spike_Blocks" instance=ExtResource("23_5lgry")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -61, 15, -36.78)
+
+[node name="spike-block-wide2" parent="World/Spike_Blocks/TRIO_SpikeBlock_1" instance=ExtResource("23_5lgry")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="spike-block-wide3" parent="World/Spike_Blocks/TRIO_SpikeBlock_1" instance=ExtResource("23_5lgry")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+
 [node name="Platform_Path" type="Node3D" parent="World"]
 
 [node name="DUO_Spike_1" parent="World/Platform_Path" node_paths=PackedStringArray("object_to_move") instance=ExtResource("19_6dvqp")]
@@ -424,6 +461,17 @@ ping_pong = true
 curve = SubResource("Curve3D_7pmen")
 object_to_move = NodePath("../../Spike_Blocks/DUO_SpikeBlock_2")
 movement_speed = 6.0
+ping_pong = true
+
+[node name="MovingTrampoline_Path" parent="World/Platform_Path" node_paths=PackedStringArray("object_to_move") instance=ExtResource("19_6dvqp")]
+curve = SubResource("Curve3D_w0s18")
+object_to_move = NodePath("../../Moving_Platforms/platform-moving2")
+movement_speed = 3.5
+ping_pong = true
+
+[node name="SpikeTrioPath_1" parent="World/Platform_Path" node_paths=PackedStringArray("object_to_move") instance=ExtResource("19_6dvqp")]
+curve = SubResource("Curve3D_0hq60")
+object_to_move = NodePath("../../Spike_Blocks/TRIO_SpikeBlock_1")
 ping_pong = true
 
 [node name="Trampoline_Platforms" type="Node3D" parent="World"]
@@ -488,6 +536,18 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -41, 9, -35.78)
 
 [node name="CoinSpawner13" parent="World/Coins" instance=ExtResource("13_hwt3x")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -38, 8, -36.78)
+
+[node name="CoinSpawner15" parent="World/Coins" instance=ExtResource("13_hwt3x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -70.198, 17.9184, -36.78)
+
+[node name="CoinSpawner16" parent="World/Coins" instance=ExtResource("13_hwt3x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -67.198, 17.9184, -36.78)
+
+[node name="CoinSpawner17" parent="World/Coins" instance=ExtResource("13_hwt3x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -65.198, 17.9184, -36.78)
+
+[node name="CoinSpawner18" parent="World/Coins" instance=ExtResource("13_hwt3x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -62.198, 17.9184, -36.78)
 
 [node name="Sun" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.422618, -0.694272, 0.582563, 0, 0.642788, 0.766044, -0.906308, 0.323744, -0.271654, 0, 0, 0)
@@ -622,48 +682,17 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19, -3, -7)
 mesh = SubResource("SphereMesh_118u7")
 surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
 
-[node name="TRIO_SpikeBlock_1" parent="." instance=ExtResource("23_5lgry")]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -61, 15, -36.78)
-
-[node name="spike-block-wide2" parent="TRIO_SpikeBlock_1" instance=ExtResource("23_5lgry")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-
-[node name="spike-block-wide3" parent="TRIO_SpikeBlock_1" instance=ExtResource("23_5lgry")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
-
-[node name="SpikeTrioPath_1" parent="." node_paths=PackedStringArray("object_to_move") instance=ExtResource("19_6dvqp")]
-curve = SubResource("Curve3D_0hq60")
-object_to_move = NodePath("../TRIO_SpikeBlock_1")
-ping_pong = true
-
-[node name="platform-falling3" parent="." instance=ExtResource("16_5m0ty")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -78.4123, 14, -36.78)
-
-[node name="platform-falling2" parent="." instance=ExtResource("16_5m0ty")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -76.2067, 14, -36.78)
-
-[node name="platform-falling" parent="." instance=ExtResource("16_5m0ty")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -74, 14, -36.78)
-
-[node name="CoinSpawner4" parent="." instance=ExtResource("13_hwt3x")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -70.198, 17.9184, -36.78)
-
 [node name="CoinSpawner3" parent="." instance=ExtResource("13_hwt3x")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -67.198, 17.9184, -36.78)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -107, 18, -37)
 
 [node name="CoinSpawner2" parent="." instance=ExtResource("13_hwt3x")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -65.198, 17.9184, -36.78)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -104, 18, -37)
 
 [node name="CoinSpawner" parent="." instance=ExtResource("13_hwt3x")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -62.198, 17.9184, -36.78)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -93, 17, -37)
 
-[node name="platform-moving" parent="." instance=ExtResource("18_xpm53")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -81.2067, 14, -36.78)
-
-[node name="trampoline" parent="platform-moving" instance=ExtResource("20_la737")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.608717, 0)
-
-[node name="MovingTrampoline_Path" parent="." instance=ExtResource("19_6dvqp")]
+[node name="platform" parent="." instance=ExtResource("23_xv844")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -80.6321, 14, -36.78)
 
 [connection signal="coin_collected" from="Player" to="HUD" method="_on_coin_collected"]
 [connection signal="reached_goal" from="Player" to="HUD" method="_on_player_reached_goal"]
