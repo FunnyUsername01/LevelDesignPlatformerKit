@@ -352,14 +352,14 @@ ping_pong = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35.9858, 13.5, -23.0744)
 
 [node name="platform2" parent="." instance=ExtResource("23_xv844")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -45.9113, 20.5192, -24.4218)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -45.9113, 21.5192, -24.2341)
 metadata/_edit_group_ = true
 
 [node name="trampoline" parent="platform2" instance=ExtResource("20_la737")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 
 [node name="platform" parent="." instance=ExtResource("23_xv844")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -43.4803, 16.5192, -22.2959)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -43.4803, 17.5192, -21.8882)
 metadata/_edit_group_ = true
 
 [node name="trampoline" parent="platform" instance=ExtResource("20_la737")]
