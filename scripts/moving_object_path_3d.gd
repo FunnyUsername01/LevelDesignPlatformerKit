@@ -5,6 +5,7 @@ extends Path3D
 
 @export var object_to_move : Node
 @export var movement_speed : float = 10.0
+@export var move_delay : float = 1.0
 @export var is_on_from_start : bool = true
 @export var look_at_object_when_activated : bool
 @export var ping_pong : bool
@@ -42,6 +43,7 @@ func _process(delta: float) -> void:
 
 func receive_input(on : bool) -> void:
 	is_on_from_start = on
+	await get_tree().create_timer(move_delay).timeout
 	
 	if on and look_at_object_when_activated:
 		get_tree().call_group("View", "look_at_target",object_to_move)
