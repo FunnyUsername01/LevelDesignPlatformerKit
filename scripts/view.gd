@@ -4,7 +4,7 @@ extends Node3D
 @export var target: Node
 
 @export_group("Zoom")
-@export var zoom_minimum = 10
+@export var zoom_minimum = 15
 @export var zoom_maximum = 50
 @export var zoom_speed = 10
 @export var default_zoom = 10
