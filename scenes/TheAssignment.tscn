@@ -651,9 +651,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -57.8001, 12.471, -13.78)
 [node name="trampoline2" parent="World/Trampoline_Platforms/platform3" instance=ExtResource("20_la737")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0537262, 0.608717, -0.0593872)
 
-[node name="CoinSpawner" parent="World/Trampoline_Platforms" instance=ExtResource("13_hwt3x")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -86, 18, -36.78)
-
 [node name="Coins" type="Node3D" parent="World"]
 
 [node name="CoinSpawner6" parent="World/Coins" instance=ExtResource("13_hwt3x")]
