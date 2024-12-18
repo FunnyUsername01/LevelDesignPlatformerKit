@@ -806,7 +806,6 @@ icon_alignment = 1
 
 [node name="TimeLabel" type="Label" parent="HUD/Control"]
 unique_name_in_owner = true
-visible = false
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -823,7 +822,6 @@ vertical_alignment = 1
 
 [node name="TimeNameLabel" type="Label" parent="HUD/Control"]
 unique_name_in_owner = true
-visible = false
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5

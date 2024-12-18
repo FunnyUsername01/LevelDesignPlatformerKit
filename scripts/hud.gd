@@ -38,7 +38,7 @@ func _process(delta: float) -> void:
 		time_label.text = minutes + leftover_seconds
 
 func start_speedrun():
-	speed_run = true
+	speed_run = false
 
 func _on_coin_collected(coins):
 	get_tree().call_group("Door", "coin_amount_updated",coins)
