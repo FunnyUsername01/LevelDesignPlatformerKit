@@ -1,0 +1,1455 @@
+[gd_scene load_steps=20 format=3 uid="uid://b5c05e1ukckht"]
+
+[ext_resource type="Environment" uid="uid://bqnqgflivjvue" path="res://scenes/main-environment.tres" id="1_74265"]
+[ext_resource type="PackedScene" uid="uid://dl2ed4gkybggf" path="res://objects/player.tscn" id="2_52bxw"]
+[ext_resource type="Script" path="res://scripts/view.gd" id="3_7fy6n"]
+[ext_resource type="PackedScene" uid="uid://cxea8lmw7cy1l" path="res://objects/player_kill_volume.tscn" id="4_j2d83"]
+[ext_resource type="PackedScene" uid="uid://bdm3quh21j64k" path="res://objects/platform_large.tscn" id="7_m1cvx"]
+[ext_resource type="PackedScene" uid="uid://rjh4ifidqrfp" path="res://objects/platform_medium.tscn" id="8_rsjgr"]
+[ext_resource type="Script" path="res://scripts/hud.gd" id="17_mb20r"]
+[ext_resource type="Texture2D" uid="uid://cd7oyc56ehkx1" path="res://sprites/coin.png" id="18_unhrx"]
+[ext_resource type="LabelSettings" uid="uid://daohhjonjrdx8" path="res://themes/label_settings.tres" id="19_jdi2m"]
+[ext_resource type="FontFile" uid="uid://d0cxd77jybrcn" path="res://fonts/lilita_one_regular.ttf" id="20_uojr3"]
+[ext_resource type="Theme" uid="uid://d3avl0mr4r87l" path="res://themes/default_theme.tres" id="21_gi8j3"]
+[ext_resource type="Texture2D" uid="uid://dm50aa4qogm65" path="res://sprites/button_rectangle_depth_gloss.png" id="22_rhukp"]
+[ext_resource type="AudioStream" uid="uid://do7snefxsw8ok" path="res://sounds/space-chillout-14194.mp3" id="23_wc27v"]
+
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_u8ojw"]
+auto_exposure_scale = 0.75
+dof_blur_far_distance = 0.01
+
+[sub_resource type="LabelSettings" id="LabelSettings_ri8jt"]
+font = ExtResource("20_uojr3")
+font_size = 128
+shadow_color = Color(0, 0, 0, 0.376471)
+shadow_offset = Vector2(2, 2)
+
+[sub_resource type="LabelSettings" id="LabelSettings_x4d2s"]
+font = ExtResource("20_uojr3")
+font_size = 32
+shadow_color = Color(0, 0, 0, 0.376471)
+shadow_offset = Vector2(2, 2)
+
+[sub_resource type="LabelSettings" id="LabelSettings_v6r7m"]
+font = ExtResource("20_uojr3")
+font_size = 42
+shadow_color = Color(0, 0, 0, 0.376471)
+shadow_offset = Vector2(2, 2)
+
+[sub_resource type="SphereMesh" id="SphereMesh_118u7"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_p5qsu"]
+albedo_color = Color(0.999998, 0.99695, 0.675933, 1)
+emission_enabled = true
+emission = Color(0.96384, 0.964172, 0.923152, 1)
+emission_energy_multiplier = 16.0
+
+[node name="Main" type="Node3D"]
+
+[node name="Environment" type="WorldEnvironment" parent="."]
+unique_name_in_owner = true
+environment = ExtResource("1_74265")
+camera_attributes = SubResource("CameraAttributesPractical_u8ojw")
+
+[node name="Player" parent="." node_paths=PackedStringArray("view") instance=ExtResource("2_52bxw")]
+transform = Transform3D(0.0359459, 0, -0.999354, 0, 1, 0, 0.999354, 0, 0.0359459, 0, 1, 0)
+view = NodePath("../View")
+
+[node name="View" type="Node3D" parent="." node_paths=PackedStringArray("target") groups=["View"]]
+process_mode = 3
+transform = Transform3D(0.707107, -0.298836, 0.640856, 0, 0.906308, 0.422618, -0.707107, -0.298836, 0.640856, 0, 0, 0)
+script = ExtResource("3_7fy6n")
+target = NodePath("../Player")
+camera_angle_max = 20.0
+
+[node name="Camera" type="Camera3D" parent="View"]
+transform = Transform3D(1, 0, 0, 0, 1, -3.27826e-07, 0, 0, 1, 0.0792346, -0.0334851, 10.0718)
+current = true
+fov = 40.0
+
+[node name="World" type="Node3D" parent="."]
+
+[node name="player_kill_volume" parent="World" instance=ExtResource("4_j2d83")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3, 0)
+death_height = -3.0
+
+[node name="FallingPlatforms" type="Node3D" parent="World"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.51436, 0, -0.00218785)
+
+[node name="Moving_Platforms" type="Node3D" parent="World"]
+
+[node name="Static_Platforms" type="Node3D" parent="World"]
+
+[node name="Spike_Blocks" type="Node3D" parent="World"]
+
+[node name="Platform_Path" type="Node3D" parent="World"]
+
+[node name="Trampolines" type="Node3D" parent="World"]
+
+[node name="Coins" type="Node3D" parent="World"]
+
+[node name="Sun" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.422618, -0.694272, 0.582563, 0, 0.642788, 0.766044, -0.906308, 0.323744, -0.271654, 0, 0, 0)
+shadow_enabled = true
+shadow_opacity = 0.75
+
+[node name="HUD" type="CanvasLayer" parent="." groups=["HUD"]]
+process_mode = 3
+script = ExtResource("17_mb20r")
+
+[node name="Control" type="Control" parent="HUD"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Icon" type="TextureRect" parent="HUD/Control"]
+layout_mode = 0
+offset_left = 157.0
+offset_top = 19.0
+offset_right = 413.0
+offset_bottom = 275.0
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("18_unhrx")
+
+[node name="x" type="Label" parent="HUD/Control"]
+layout_mode = 0
+offset_left = 208.0
+offset_top = 16.0
+offset_right = 240.0
+offset_bottom = 75.0
+text = "×"
+label_settings = ExtResource("19_jdi2m")
+
+[node name="Level Complete" type="Label" parent="HUD/Control"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -429.0
+offset_top = 139.0
+offset_right = 429.0
+offset_bottom = 287.0
+grow_horizontal = 2
+text = "Level Complete!"
+label_settings = SubResource("LabelSettings_ri8jt")
+
+[node name="CoinsLabel" type="Label" parent="HUD/Control"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 243.0
+offset_top = 15.0
+offset_right = 467.0
+offset_bottom = 74.0
+text = "2"
+label_settings = ExtResource("19_jdi2m")
+
+[node name="PlayAgainButton" type="Button" parent="HUD/Control"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -196.0
+offset_top = -258.0
+offset_right = 196.0
+offset_bottom = -122.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 0
+theme = ExtResource("21_gi8j3")
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 2
+theme_override_fonts/font = ExtResource("20_uojr3")
+theme_override_font_sizes/font_size = 60
+text = "Play Again?"
+icon = ExtResource("22_rhukp")
+flat = true
+icon_alignment = 1
+
+[node name="TimeLabel" type="Label" parent="HUD/Control"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -48.5
+offset_top = 59.0
+offset_right = 48.5
+offset_bottom = 115.0
+grow_horizontal = 2
+text = "00"
+label_settings = SubResource("LabelSettings_x4d2s")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TimeNameLabel" type="Label" parent="HUD/Control"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -49.0
+offset_top = 22.0
+offset_right = 49.0
+offset_bottom = 78.0
+grow_horizontal = 2
+text = "TIME"
+label_settings = SubResource("LabelSettings_v6r7m")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label" type="Label" parent="HUD/Control"]
+layout_mode = 0
+offset_left = 22.0
+offset_top = 14.0
+offset_right = 156.0
+offset_bottom = 70.0
+text = "Jumps"
+label_settings = ExtResource("19_jdi2m")
+
+[node name="Background" type="Node3D" parent="."]
+
+[node name="star" type="MeshInstance3D" parent="Background"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 70, -7)
+mesh = SubResource("SphereMesh_118u7")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star2" type="MeshInstance3D" parent="Background"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 126, 61, -14)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath("../star")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star3" type="MeshInstance3D" parent="Background"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -50, 51, 9)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath("../star2")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star4" type="MeshInstance3D" parent="Background"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 170, 91, 105)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath("../star3")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star5" type="MeshInstance3D" parent="Background"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -108, 146, -17)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath("../star4")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star6" type="MeshInstance3D" parent="Background"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -100, 102, 18)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath("../star2")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star7" type="MeshInstance3D" parent="Background"]
+transform = Transform3D(0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, 200, 102, -142)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath("../star2")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star8" type="MeshInstance3D" parent="Background"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -150, 122, -104)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath("../star2")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star9" type="MeshInstance3D" parent="Background"]
+transform = Transform3D(0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, 195.752, 153, -91.3743)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath("../star2")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star10" type="MeshInstance3D" parent="Background"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -161, 142, -226)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath("../star2")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star11" type="MeshInstance3D" parent="Background"]
+transform = Transform3D(0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, 64.9685, 173, -74.654)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath("../star2")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star12" type="MeshInstance3D" parent="Background"]
+transform = Transform3D(0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, -55.7215, 193, -95.6047)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath("../star2")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star13" type="MeshInstance3D" parent="Background"]
+transform = Transform3D(0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, 228.176, 92, 111.197)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath("../star12")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star14" type="MeshInstance3D" parent="Background"]
+transform = Transform3D(0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, 249.367, 83, 5.06516)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath(".")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star15" type="MeshInstance3D" parent="Background"]
+transform = Transform3D(0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, 226.031, 73, 181.021)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath(".")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star16" type="MeshInstance3D" parent="Background"]
+transform = Transform3D(0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, 375.7, 113, -6.63608)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath(".")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star17" type="MeshInstance3D" parent="Background"]
+transform = Transform3D(0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, 185.905, 168, 230.315)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath(".")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star18" type="MeshInstance3D" parent="Background"]
+transform = Transform3D(0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, 221.783, 124, 231.647)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath(".")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star19" type="MeshInstance3D" parent="Background"]
+transform = Transform3D(-0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, -0.866025, 144.881, 124, -99.5421)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath(".")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star20" type="MeshInstance3D" parent="Background"]
+transform = Transform3D(0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, 90.9994, 144, 248.367)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath(".")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star21" type="MeshInstance3D" parent="Background"]
+transform = Transform3D(-0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, -0.866025, 192.682, 175, -82.3364)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath(".")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star22" type="MeshInstance3D" parent="Background"]
+transform = Transform3D(0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, -29.6906, 164, 227.416)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath(".")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star23" type="MeshInstance3D" parent="Background"]
+transform = Transform3D(-0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, -0.866025, 174.983, 195, 48.3187)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath(".")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star24" type="MeshInstance3D" parent="Background"]
+transform = Transform3D(-0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, -0.866025, 123.51, 215, 159.474)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath(".")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star" type="MeshInstance3D" parent="Background/star24"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 380.865, -107, -216.5)
+mesh = SubResource("SphereMesh_118u7")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star2" type="MeshInstance3D" parent="Background/star24"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 488.865, -116, -223.5)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath("../star")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star3" type="MeshInstance3D" parent="Background/star24"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 312.865, -126, -200.5)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath("../star2")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star4" type="MeshInstance3D" parent="Background/star24"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 532.865, -86, -104.5)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath("../star3")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star5" type="MeshInstance3D" parent="Background/star24"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 254.865, -31, -226.5)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath("../star4")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star6" type="MeshInstance3D" parent="Background/star24"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 262.865, -75, -191.5)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath("../star2")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star7" type="MeshInstance3D" parent="Background/star24"]
+transform = Transform3D(0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, 562.865, -75, -351.5)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath("../star2")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star8" type="MeshInstance3D" parent="Background/star24"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 212.865, -55, -313.5)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath("../star2")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star9" type="MeshInstance3D" parent="Background/star24"]
+transform = Transform3D(0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, 558.617, -24, -300.875)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath("../star2")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star10" type="MeshInstance3D" parent="Background/star24"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 201.865, -35, -435.5)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath("../star2")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star11" type="MeshInstance3D" parent="Background/star24"]
+transform = Transform3D(0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, 427.833, -4, -284.154)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath("../star2")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star12" type="MeshInstance3D" parent="Background/star24"]
+transform = Transform3D(0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, 307.143, 16, -305.105)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath("../star2")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star13" type="MeshInstance3D" parent="Background/star24"]
+transform = Transform3D(0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, 591.041, -85, -98.3033)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath("../star12")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star14" type="MeshInstance3D" parent="Background/star24"]
+transform = Transform3D(0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, 612.232, -94, -204.435)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath(".")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star15" type="MeshInstance3D" parent="Background/star24"]
+transform = Transform3D(0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, 588.896, -104, -28.4792)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath(".")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star16" type="MeshInstance3D" parent="Background/star24"]
+transform = Transform3D(0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, 738.565, -64, -216.136)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath(".")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star17" type="MeshInstance3D" parent="Background/star24"]
+transform = Transform3D(0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, 548.77, -9, 20.8152)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath(".")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star18" type="MeshInstance3D" parent="Background/star24"]
+transform = Transform3D(0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, 584.648, -53, 22.1465)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath(".")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star19" type="MeshInstance3D" parent="Background/star24"]
+transform = Transform3D(-0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, -0.866025, 507.746, -53, -309.042)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath(".")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star20" type="MeshInstance3D" parent="Background/star24"]
+transform = Transform3D(0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, 453.864, -33, 38.8668)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath(".")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star21" type="MeshInstance3D" parent="Background/star24"]
+transform = Transform3D(-0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, -0.866025, 555.547, -2, -291.837)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath(".")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star22" type="MeshInstance3D" parent="Background/star24"]
+transform = Transform3D(0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, 333.174, -13, 17.9161)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath(".")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star23" type="MeshInstance3D" parent="Background/star24"]
+transform = Transform3D(-0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, -0.866025, 537.848, 18, -161.182)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath(".")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star24" type="MeshInstance3D" parent="Background/star24"]
+transform = Transform3D(-0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, -0.866025, 486.375, 38, -50.0264)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath(".")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star" type="MeshInstance3D" parent="Background/star24/star24"]
+transform = Transform3D(1, 0, 1.19209e-07, 0, 1, 0, -1.19209e-07, 0, 1, 429.96, -194, -183.536)
+mesh = SubResource("SphereMesh_118u7")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star2" type="MeshInstance3D" parent="Background/star24/star24"]
+transform = Transform3D(1, 0, 1.19209e-07, 0, 1, 0, -1.19209e-07, 0, 1, 537.96, -203, -190.536)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath("../star")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star3" type="MeshInstance3D" parent="Background/star24/star24"]
+transform = Transform3D(1, 0, 1.19209e-07, 0, 1, 0, -1.19209e-07, 0, 1, 361.96, -213, -167.536)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath("../star2")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star4" type="MeshInstance3D" parent="Background/star24/star24"]
+transform = Transform3D(1, 0, 1.19209e-07, 0, 1, 0, -1.19209e-07, 0, 1, 581.96, -173, -71.5362)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath("../star3")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star5" type="MeshInstance3D" parent="Background/star24/star24"]
+transform = Transform3D(1, 0, 1.19209e-07, 0, 1, 0, -1.19209e-07, 0, 1, 303.96, -118, -193.536)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath("../star4")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star6" type="MeshInstance3D" parent="Background/star24/star24"]
+transform = Transform3D(1, 0, 1.19209e-07, 0, 1, 0, -1.19209e-07, 0, 1, 311.96, -162, -158.536)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath("../star2")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star7" type="MeshInstance3D" parent="Background/star24/star24"]
+transform = Transform3D(0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, 611.96, -162, -318.536)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath("../star2")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star8" type="MeshInstance3D" parent="Background/star24/star24"]
+transform = Transform3D(1, 0, 1.19209e-07, 0, 1, 0, -1.19209e-07, 0, 1, 261.96, -142, -280.536)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath("../star2")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star9" type="MeshInstance3D" parent="Background/star24/star24"]
+transform = Transform3D(0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, 607.713, -111, -267.91)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath("../star2")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star10" type="MeshInstance3D" parent="Background/star24/star24"]
+transform = Transform3D(1, 0, 1.19209e-07, 0, 1, 0, -1.19209e-07, 0, 1, 250.96, -122, -402.536)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath("../star2")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star11" type="MeshInstance3D" parent="Background/star24/star24"]
+transform = Transform3D(0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, 476.929, -91, -251.19)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath("../star2")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star12" type="MeshInstance3D" parent="Background/star24/star24"]
+transform = Transform3D(0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, 356.239, -71, -272.141)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath("../star2")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star13" type="MeshInstance3D" parent="Background/star24/star24"]
+transform = Transform3D(0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, 640.136, -172, -65.3392)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath("../star12")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star14" type="MeshInstance3D" parent="Background/star24/star24"]
+transform = Transform3D(0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, 661.327, -181, -171.471)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath(".")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star15" type="MeshInstance3D" parent="Background/star24/star24"]
+transform = Transform3D(0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, 637.991, -191, 4.48474)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath(".")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star16" type="MeshInstance3D" parent="Background/star24/star24"]
+transform = Transform3D(0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, 787.66, -151, -183.172)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath(".")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star17" type="MeshInstance3D" parent="Background/star24/star24"]
+transform = Transform3D(0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, 597.866, -96, 53.7794)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath(".")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star18" type="MeshInstance3D" parent="Background/star24/star24"]
+transform = Transform3D(0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, 633.744, -140, 55.1104)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath(".")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star19" type="MeshInstance3D" parent="Background/star24/star24"]
+transform = Transform3D(-0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, -0.866025, 556.841, -140, -276.078)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath(".")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star20" type="MeshInstance3D" parent="Background/star24/star24"]
+transform = Transform3D(0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, 502.96, -120, 71.8309)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath(".")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star21" type="MeshInstance3D" parent="Background/star24/star24"]
+transform = Transform3D(-0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, -0.866025, 604.643, -89, -258.872)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath(".")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star22" type="MeshInstance3D" parent="Background/star24/star24"]
+transform = Transform3D(0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, 382.27, -100, 50.8802)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath(".")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star23" type="MeshInstance3D" parent="Background/star24/star24"]
+transform = Transform3D(-0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, -0.866025, 586.944, -69, -128.217)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath(".")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star24" type="MeshInstance3D" parent="Background/star24/star24"]
+transform = Transform3D(-0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, -0.866025, 535.47, -49, -17.0623)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath(".")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star" type="MeshInstance3D" parent="Background/star24/star24/star24"]
+transform = Transform3D(1, 0, 1.19209e-07, 0, 1, 0, -1.19209e-07, 0, 1, 597.961, -194, 61.4639)
+mesh = SubResource("SphereMesh_118u7")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star2" type="MeshInstance3D" parent="Background/star24/star24/star24"]
+transform = Transform3D(1, 0, 1.19209e-07, 0, 1, 0, -1.19209e-07, 0, 1, 705.961, -203, 54.4638)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath("../star")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star3" type="MeshInstance3D" parent="Background/star24/star24/star24"]
+transform = Transform3D(1, 0, 1.19209e-07, 0, 1, 0, -1.19209e-07, 0, 1, 529.961, -213, 77.464)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath("../star2")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star4" type="MeshInstance3D" parent="Background/star24/star24/star24"]
+transform = Transform3D(1, 0, 1.19209e-07, 0, 1, 0, -1.19209e-07, 0, 1, 749.961, -173, 173.464)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath("../star3")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star5" type="MeshInstance3D" parent="Background/star24/star24/star24"]
+transform = Transform3D(1, 0, 1.19209e-07, 0, 1, 0, -1.19209e-07, 0, 1, 471.961, -118, 51.4639)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath("../star4")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star6" type="MeshInstance3D" parent="Background/star24/star24/star24"]
+transform = Transform3D(1, 0, 1.19209e-07, 0, 1, 0, -1.19209e-07, 0, 1, 479.961, -162, 86.464)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath("../star2")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star7" type="MeshInstance3D" parent="Background/star24/star24/star24"]
+transform = Transform3D(0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, 779.961, -162, -73.5361)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath("../star2")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star8" type="MeshInstance3D" parent="Background/star24/star24/star24"]
+transform = Transform3D(1, 0, 1.19209e-07, 0, 1, 0, -1.19209e-07, 0, 1, 429.961, -142, -35.5362)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath("../star2")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star9" type="MeshInstance3D" parent="Background/star24/star24/star24"]
+transform = Transform3D(0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, 775.713, -111, -22.9103)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath("../star2")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star10" type="MeshInstance3D" parent="Background/star24/star24/star24"]
+transform = Transform3D(1, 0, 1.19209e-07, 0, 1, 0, -1.19209e-07, 0, 1, 418.961, -122, -157.536)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath("../star2")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star11" type="MeshInstance3D" parent="Background/star24/star24/star24"]
+transform = Transform3D(0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, 644.929, -91, -6.18996)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath("../star2")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star12" type="MeshInstance3D" parent="Background/star24/star24/star24"]
+transform = Transform3D(0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, 524.239, -71, -27.1407)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath("../star2")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star13" type="MeshInstance3D" parent="Background/star24/star24/star24"]
+transform = Transform3D(0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, 808.137, -172, 179.661)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath("../star12")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star14" type="MeshInstance3D" parent="Background/star24/star24/star24"]
+transform = Transform3D(0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, 829.328, -181, 73.529)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath(".")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star15" type="MeshInstance3D" parent="Background/star24/star24/star24"]
+transform = Transform3D(0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, 805.992, -191, 249.485)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath(".")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star16" type="MeshInstance3D" parent="Background/star24/star24/star24"]
+transform = Transform3D(0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, 955.661, -151, 61.8276)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath(".")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star17" type="MeshInstance3D" parent="Background/star24/star24/star24"]
+transform = Transform3D(0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, 765.866, -96, 298.779)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath(".")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star18" type="MeshInstance3D" parent="Background/star24/star24/star24"]
+transform = Transform3D(0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, 801.744, -140, 300.11)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath(".")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star19" type="MeshInstance3D" parent="Background/star24/star24/star24"]
+transform = Transform3D(-0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, -0.866025, 724.842, -140, -31.0782)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath(".")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star20" type="MeshInstance3D" parent="Background/star24/star24/star24"]
+transform = Transform3D(0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, 670.96, -120, 316.831)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath(".")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star21" type="MeshInstance3D" parent="Background/star24/star24/star24"]
+transform = Transform3D(-0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, -0.866025, 772.643, -89, -13.8724)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath(".")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star22" type="MeshInstance3D" parent="Background/star24/star24/star24"]
+transform = Transform3D(0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, 550.27, -100, 295.88)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath(".")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star23" type="MeshInstance3D" parent="Background/star24/star24/star24"]
+transform = Transform3D(-0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, -0.866025, 754.944, -69, 116.783)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath(".")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star24" type="MeshInstance3D" parent="Background/star24/star24/star24"]
+transform = Transform3D(-0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, -0.866025, 703.47, -49, 227.938)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath(".")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star" type="MeshInstance3D" parent="Background/star24/star24/star24/star24"]
+transform = Transform3D(1, 0, 1.19209e-07, 0, 1, 0, -1.19209e-07, 0, 1, 352.96, -194, -362.889)
+mesh = SubResource("SphereMesh_118u7")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star2" type="MeshInstance3D" parent="Background/star24/star24/star24/star24"]
+transform = Transform3D(1, 0, 1.19209e-07, 0, 1, 0, -1.19209e-07, 0, 1, 460.96, -203, -369.889)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath("../star")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star3" type="MeshInstance3D" parent="Background/star24/star24/star24/star24"]
+transform = Transform3D(1, 0, 1.19209e-07, 0, 1, 0, -1.19209e-07, 0, 1, 284.96, -213, -346.889)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath("../star2")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star4" type="MeshInstance3D" parent="Background/star24/star24/star24/star24"]
+transform = Transform3D(1, 0, 1.19209e-07, 0, 1, 0, -1.19209e-07, 0, 1, 504.96, -173, -250.889)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath("../star3")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star5" type="MeshInstance3D" parent="Background/star24/star24/star24/star24"]
+transform = Transform3D(1, 0, 1.19209e-07, 0, 1, 0, -1.19209e-07, 0, 1, 226.96, -118, -372.889)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath("../star4")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star6" type="MeshInstance3D" parent="Background/star24/star24/star24/star24"]
+transform = Transform3D(1, 0, 1.19209e-07, 0, 1, 0, -1.19209e-07, 0, 1, 234.96, -162, -337.889)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath("../star2")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star7" type="MeshInstance3D" parent="Background/star24/star24/star24/star24"]
+transform = Transform3D(0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, 534.96, -162, -497.889)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath("../star2")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star8" type="MeshInstance3D" parent="Background/star24/star24/star24/star24"]
+transform = Transform3D(1, 0, 1.19209e-07, 0, 1, 0, -1.19209e-07, 0, 1, 184.96, -142, -459.889)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath("../star2")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star9" type="MeshInstance3D" parent="Background/star24/star24/star24/star24"]
+transform = Transform3D(0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, 530.713, -111, -447.263)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath("../star2")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star10" type="MeshInstance3D" parent="Background/star24/star24/star24/star24"]
+transform = Transform3D(1, 0, 1.19209e-07, 0, 1, 0, -1.19209e-07, 0, 1, 173.96, -122, -581.889)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath("../star2")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star11" type="MeshInstance3D" parent="Background/star24/star24/star24/star24"]
+transform = Transform3D(0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, 399.928, -91, -430.543)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath("../star2")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star12" type="MeshInstance3D" parent="Background/star24/star24/star24/star24"]
+transform = Transform3D(0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, 279.239, -71, -451.493)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath("../star2")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star13" type="MeshInstance3D" parent="Background/star24/star24/star24/star24"]
+transform = Transform3D(0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, 563.136, -172, -244.692)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath("../star12")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star14" type="MeshInstance3D" parent="Background/star24/star24/star24/star24"]
+transform = Transform3D(0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, 584.327, -181, -350.824)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath(".")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star15" type="MeshInstance3D" parent="Background/star24/star24/star24/star24"]
+transform = Transform3D(0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, 560.991, -191, -174.868)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath(".")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star16" type="MeshInstance3D" parent="Background/star24/star24/star24/star24"]
+transform = Transform3D(0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, 710.66, -151, -362.525)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath(".")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star17" type="MeshInstance3D" parent="Background/star24/star24/star24/star24"]
+transform = Transform3D(0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, 520.865, -96, -125.573)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath(".")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star18" type="MeshInstance3D" parent="Background/star24/star24/star24/star24"]
+transform = Transform3D(0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, 556.743, -140, -124.242)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath(".")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star19" type="MeshInstance3D" parent="Background/star24/star24/star24/star24"]
+transform = Transform3D(-0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, -0.866025, 479.841, -140, -455.431)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath(".")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star20" type="MeshInstance3D" parent="Background/star24/star24/star24/star24"]
+transform = Transform3D(0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, 425.96, -120, -107.522)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath(".")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star21" type="MeshInstance3D" parent="Background/star24/star24/star24/star24"]
+transform = Transform3D(-0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, -0.866025, 527.642, -89, -438.225)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath(".")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star22" type="MeshInstance3D" parent="Background/star24/star24/star24/star24"]
+transform = Transform3D(0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, 305.269, -100, -128.472)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath(".")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star23" type="MeshInstance3D" parent="Background/star24/star24/star24/star24"]
+transform = Transform3D(-0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, -0.866025, 509.944, -69, -307.57)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath(".")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star24" type="MeshInstance3D" parent="Background/star24/star24/star24/star24"]
+transform = Transform3D(-0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, -0.866025, 458.47, -49, -196.415)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath(".")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star" type="MeshInstance3D" parent="Background/star24/star24/star24/star24/star24"]
+transform = Transform3D(1, 0, 1.19209e-07, 0, 1, 0, -1.19209e-07, 0, 1, 320.96, -194, -307.463)
+mesh = SubResource("SphereMesh_118u7")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star2" type="MeshInstance3D" parent="Background/star24/star24/star24/star24/star24"]
+transform = Transform3D(1, 0, 1.19209e-07, 0, 1, 0, -1.19209e-07, 0, 1, 428.96, -203, -314.463)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath("../star")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star3" type="MeshInstance3D" parent="Background/star24/star24/star24/star24/star24"]
+transform = Transform3D(1, 0, 1.19209e-07, 0, 1, 0, -1.19209e-07, 0, 1, 252.96, -213, -291.463)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath("../star2")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star4" type="MeshInstance3D" parent="Background/star24/star24/star24/star24/star24"]
+transform = Transform3D(1, 0, 1.19209e-07, 0, 1, 0, -1.19209e-07, 0, 1, 472.96, -173, -195.463)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath("../star3")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star5" type="MeshInstance3D" parent="Background/star24/star24/star24/star24/star24"]
+transform = Transform3D(1, 0, 1.19209e-07, 0, 1, 0, -1.19209e-07, 0, 1, 194.96, -118, -317.463)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath("../star4")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star6" type="MeshInstance3D" parent="Background/star24/star24/star24/star24/star24"]
+transform = Transform3D(1, 0, 1.19209e-07, 0, 1, 0, -1.19209e-07, 0, 1, 202.96, -162, -282.463)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath("../star2")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star7" type="MeshInstance3D" parent="Background/star24/star24/star24/star24/star24"]
+transform = Transform3D(0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, 502.96, -162, -442.463)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath("../star2")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star8" type="MeshInstance3D" parent="Background/star24/star24/star24/star24/star24"]
+transform = Transform3D(1, 0, 1.19209e-07, 0, 1, 0, -1.19209e-07, 0, 1, 152.96, -142, -404.463)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath("../star2")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star9" type="MeshInstance3D" parent="Background/star24/star24/star24/star24/star24"]
+transform = Transform3D(0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, 498.713, -111, -391.837)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath("../star2")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star10" type="MeshInstance3D" parent="Background/star24/star24/star24/star24/star24"]
+transform = Transform3D(1, 0, 1.19209e-07, 0, 1, 0, -1.19209e-07, 0, 1, 141.96, -122, -526.463)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath("../star2")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star11" type="MeshInstance3D" parent="Background/star24/star24/star24/star24/star24"]
+transform = Transform3D(0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, 367.928, -91, -375.117)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath("../star2")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star12" type="MeshInstance3D" parent="Background/star24/star24/star24/star24/star24"]
+transform = Transform3D(0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, 247.239, -71, -396.068)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath("../star2")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star13" type="MeshInstance3D" parent="Background/star24/star24/star24/star24/star24"]
+transform = Transform3D(0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, 531.136, -172, -189.266)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath("../star12")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star14" type="MeshInstance3D" parent="Background/star24/star24/star24/star24/star24"]
+transform = Transform3D(0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, 552.327, -181, -295.398)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath(".")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star15" type="MeshInstance3D" parent="Background/star24/star24/star24/star24/star24"]
+transform = Transform3D(0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, 528.991, -191, -119.442)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath(".")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star16" type="MeshInstance3D" parent="Background/star24/star24/star24/star24/star24"]
+transform = Transform3D(0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, 678.66, -151, -307.099)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath(".")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star17" type="MeshInstance3D" parent="Background/star24/star24/star24/star24/star24"]
+transform = Transform3D(0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, 488.865, -96, -70.1474)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath(".")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star18" type="MeshInstance3D" parent="Background/star24/star24/star24/star24/star24"]
+transform = Transform3D(0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, 524.743, -140, -68.8163)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath(".")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star19" type="MeshInstance3D" parent="Background/star24/star24/star24/star24/star24"]
+transform = Transform3D(-0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, -0.866025, 447.841, -140, -400.005)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath(".")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star20" type="MeshInstance3D" parent="Background/star24/star24/star24/star24/star24"]
+transform = Transform3D(0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, 393.96, -120, -52.0958)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath(".")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star21" type="MeshInstance3D" parent="Background/star24/star24/star24/star24/star24"]
+transform = Transform3D(-0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, -0.866025, 495.642, -89, -382.799)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath(".")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star22" type="MeshInstance3D" parent="Background/star24/star24/star24/star24/star24"]
+transform = Transform3D(0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, 273.27, -100, -73.0465)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath(".")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star23" type="MeshInstance3D" parent="Background/star24/star24/star24/star24/star24"]
+transform = Transform3D(-0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, -0.866025, 477.944, -69, -252.144)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath(".")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star24" type="MeshInstance3D" parent="Background/star24/star24/star24/star24/star24"]
+transform = Transform3D(-0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, -0.866025, 426.47, -49, -140.989)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath(".")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star" type="MeshInstance3D" parent="Background/star24/star24/star24/star24/star24/star24"]
+transform = Transform3D(1, 0, 1.19209e-07, 0, 1, 0, -1.19209e-07, 0, 1, 681.961, -96, 28.5369)
+mesh = SubResource("SphereMesh_118u7")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star2" type="MeshInstance3D" parent="Background/star24/star24/star24/star24/star24/star24"]
+transform = Transform3D(1, 0, 1.19209e-07, 0, 1, 0, -1.19209e-07, 0, 1, 789.961, -105, 21.5368)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath("../star")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star3" type="MeshInstance3D" parent="Background/star24/star24/star24/star24/star24/star24"]
+transform = Transform3D(1, 0, 1.19209e-07, 0, 1, 0, -1.19209e-07, 0, 1, 613.961, -115, 44.537)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath("../star2")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star4" type="MeshInstance3D" parent="Background/star24/star24/star24/star24/star24/star24"]
+transform = Transform3D(1, 0, 1.19209e-07, 0, 1, 0, -1.19209e-07, 0, 1, 833.961, -75, 140.537)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath("../star3")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star5" type="MeshInstance3D" parent="Background/star24/star24/star24/star24/star24/star24"]
+transform = Transform3D(1, 0, 1.19209e-07, 0, 1, 0, -1.19209e-07, 0, 1, 555.961, -20, 18.5369)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath("../star4")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star6" type="MeshInstance3D" parent="Background/star24/star24/star24/star24/star24/star24"]
+transform = Transform3D(1, 0, 1.19209e-07, 0, 1, 0, -1.19209e-07, 0, 1, 563.961, -64, 53.537)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath("../star2")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star7" type="MeshInstance3D" parent="Background/star24/star24/star24/star24/star24/star24"]
+transform = Transform3D(0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, 863.961, -64, -106.463)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath("../star2")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star8" type="MeshInstance3D" parent="Background/star24/star24/star24/star24/star24/star24"]
+transform = Transform3D(1, 0, 1.19209e-07, 0, 1, 0, -1.19209e-07, 0, 1, 513.961, -44, -68.4632)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath("../star2")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star9" type="MeshInstance3D" parent="Background/star24/star24/star24/star24/star24/star24"]
+transform = Transform3D(0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, 859.713, -13, -55.8374)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath("../star2")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star10" type="MeshInstance3D" parent="Background/star24/star24/star24/star24/star24/star24"]
+transform = Transform3D(1, 0, 1.19209e-07, 0, 1, 0, -1.19209e-07, 0, 1, 502.961, -24, -190.463)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath("../star2")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star11" type="MeshInstance3D" parent="Background/star24/star24/star24/star24/star24/star24"]
+transform = Transform3D(0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, 728.929, 7, -39.117)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath("../star2")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star12" type="MeshInstance3D" parent="Background/star24/star24/star24/star24/star24/star24"]
+transform = Transform3D(0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, 608.24, 27, -60.0677)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath("../star2")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star13" type="MeshInstance3D" parent="Background/star24/star24/star24/star24/star24/star24"]
+transform = Transform3D(0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, 892.137, -74, 146.734)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath("../star12")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star14" type="MeshInstance3D" parent="Background/star24/star24/star24/star24/star24/star24"]
+transform = Transform3D(0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, 913.328, -83, 40.602)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath(".")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star15" type="MeshInstance3D" parent="Background/star24/star24/star24/star24/star24/star24"]
+transform = Transform3D(0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, 889.992, -93, 216.558)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath(".")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star16" type="MeshInstance3D" parent="Background/star24/star24/star24/star24/star24/star24"]
+transform = Transform3D(0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, 1039.66, -53, 28.9006)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath(".")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star17" type="MeshInstance3D" parent="Background/star24/star24/star24/star24/star24/star24"]
+transform = Transform3D(0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, 849.866, 2, 265.852)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath(".")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star18" type="MeshInstance3D" parent="Background/star24/star24/star24/star24/star24/star24"]
+transform = Transform3D(0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, 885.744, -42, 267.184)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath(".")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star19" type="MeshInstance3D" parent="Background/star24/star24/star24/star24/star24/star24"]
+transform = Transform3D(-0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, -0.866025, 808.842, -42, -64.0052)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath(".")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star20" type="MeshInstance3D" parent="Background/star24/star24/star24/star24/star24/star24"]
+transform = Transform3D(0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, 754.961, -22, 283.904)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath(".")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star21" type="MeshInstance3D" parent="Background/star24/star24/star24/star24/star24/star24"]
+transform = Transform3D(-0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, -0.866025, 856.643, 9, -46.7995)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath(".")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star22" type="MeshInstance3D" parent="Background/star24/star24/star24/star24/star24/star24"]
+transform = Transform3D(0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, 634.27, -2, 262.953)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath(".")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star23" type="MeshInstance3D" parent="Background/star24/star24/star24/star24/star24/star24"]
+transform = Transform3D(-0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, -0.866025, 838.945, 29, 83.8555)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath(".")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star24" type="MeshInstance3D" parent="Background/star24/star24/star24/star24/star24/star24"]
+transform = Transform3D(-0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, -0.866025, 787.471, 49, 195.011)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath(".")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star" type="MeshInstance3D" parent="Background/star24/star24/star24/star24/star24/star24/star24"]
+transform = Transform3D(1, 0, 1.19209e-07, 0, 1, 0, -1.19209e-07, 0, 1, 221.269, -96, 190.596)
+mesh = SubResource("SphereMesh_118u7")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star2" type="MeshInstance3D" parent="Background/star24/star24/star24/star24/star24/star24/star24"]
+transform = Transform3D(1, 0, 1.19209e-07, 0, 1, 0, -1.19209e-07, 0, 1, 329.269, -105, 183.595)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath("../star")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star3" type="MeshInstance3D" parent="Background/star24/star24/star24/star24/star24/star24/star24"]
+transform = Transform3D(1, 0, 1.19209e-07, 0, 1, 0, -1.19209e-07, 0, 1, 153.268, -115, 206.596)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath("../star2")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star4" type="MeshInstance3D" parent="Background/star24/star24/star24/star24/star24/star24/star24"]
+transform = Transform3D(1, 0, 1.19209e-07, 0, 1, 0, -1.19209e-07, 0, 1, 373.269, -75, 302.595)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath("../star3")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star5" type="MeshInstance3D" parent="Background/star24/star24/star24/star24/star24/star24/star24"]
+transform = Transform3D(1, 0, 1.19209e-07, 0, 1, 0, -1.19209e-07, 0, 1, 95.2686, -20, 180.596)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath("../star4")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star6" type="MeshInstance3D" parent="Background/star24/star24/star24/star24/star24/star24/star24"]
+transform = Transform3D(1, 0, 1.19209e-07, 0, 1, 0, -1.19209e-07, 0, 1, 103.268, -64, 215.596)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath("../star2")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star7" type="MeshInstance3D" parent="Background/star24/star24/star24/star24/star24/star24/star24"]
+transform = Transform3D(0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, 403.269, -64, 55.5955)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath("../star2")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star8" type="MeshInstance3D" parent="Background/star24/star24/star24/star24/star24/star24/star24"]
+transform = Transform3D(1, 0, 1.19209e-07, 0, 1, 0, -1.19209e-07, 0, 1, 53.2685, -44, 93.5955)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath("../star2")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star9" type="MeshInstance3D" parent="Background/star24/star24/star24/star24/star24/star24/star24"]
+transform = Transform3D(0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, 399.021, -13, 106.221)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath("../star2")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star10" type="MeshInstance3D" parent="Background/star24/star24/star24/star24/star24/star24/star24"]
+transform = Transform3D(1, 0, 1.19209e-07, 0, 1, 0, -1.19209e-07, 0, 1, 42.2686, -24, -28.4044)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath("../star2")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star11" type="MeshInstance3D" parent="Background/star24/star24/star24/star24/star24/star24/star24"]
+transform = Transform3D(0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, 268.237, 7, 122.942)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath("../star2")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star12" type="MeshInstance3D" parent="Background/star24/star24/star24/star24/star24/star24/star24"]
+transform = Transform3D(0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, 147.547, 27, 101.991)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath("../star2")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star13" type="MeshInstance3D" parent="Background/star24/star24/star24/star24/star24/star24/star24"]
+transform = Transform3D(0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, 431.445, -74, 308.792)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath("../star12")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star14" type="MeshInstance3D" parent="Background/star24/star24/star24/star24/star24/star24/star24"]
+transform = Transform3D(0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, 452.635, -83, 202.661)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath(".")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star15" type="MeshInstance3D" parent="Background/star24/star24/star24/star24/star24/star24/star24"]
+transform = Transform3D(0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, 429.3, -93, 378.616)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath(".")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star16" type="MeshInstance3D" parent="Background/star24/star24/star24/star24/star24/star24/star24"]
+transform = Transform3D(0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, 578.969, -53, 190.959)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath(".")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star17" type="MeshInstance3D" parent="Background/star24/star24/star24/star24/star24/star24/star24"]
+transform = Transform3D(0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, 389.174, 2, 427.911)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath(".")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star18" type="MeshInstance3D" parent="Background/star24/star24/star24/star24/star24/star24/star24"]
+transform = Transform3D(0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, 425.052, -42, 429.242)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath(".")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star19" type="MeshInstance3D" parent="Background/star24/star24/star24/star24/star24/star24/star24"]
+transform = Transform3D(-0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, -0.866025, 348.149, -42, 98.0535)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath(".")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star20" type="MeshInstance3D" parent="Background/star24/star24/star24/star24/star24/star24/star24"]
+transform = Transform3D(0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, 294.268, -22, 445.963)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath(".")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star21" type="MeshInstance3D" parent="Background/star24/star24/star24/star24/star24/star24/star24"]
+transform = Transform3D(-0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, -0.866025, 395.951, 9, 115.259)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath(".")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star22" type="MeshInstance3D" parent="Background/star24/star24/star24/star24/star24/star24/star24"]
+transform = Transform3D(0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, 173.578, -2, 425.012)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath(".")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star23" type="MeshInstance3D" parent="Background/star24/star24/star24/star24/star24/star24/star24"]
+transform = Transform3D(-0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, -0.866025, 378.252, 29, 245.914)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath(".")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="star24" type="MeshInstance3D" parent="Background/star24/star24/star24/star24/star24/star24/star24"]
+transform = Transform3D(-0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, -0.866025, 326.778, 49, 357.069)
+mesh = SubResource("SphereMesh_118u7")
+skeleton = NodePath(".")
+surface_material_override/0 = SubResource("StandardMaterial3D_p5qsu")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("23_wc27v")
+volume_db = -20.0
+autoplay = true
+parameters/looping = true
+
+[node name="Platform_DoubleJump_3" parent="." instance=ExtResource("7_m1cvx")]
+transform = Transform3D(0.000475357, 0.0225078, -0.999747, 0.0379464, 0.999026, 0.0225097, 0.99928, -0.0379475, -0.000379197, -45, 18, -17.5)
+
+[node name="platform-large8" parent="Platform_DoubleJump_3" instance=ExtResource("7_m1cvx")]
+transform = Transform3D(0.999914, -0.0130016, 0.00155356, 0.0129474, 0.999438, 0.0309237, -0.00195475, -0.030901, 0.999521, 0.00237846, 0.112539, -4.99873)
+
+[node name="Platform_DoubleJump_2" parent="." instance=ExtResource("7_m1cvx")]
+transform = Transform3D(-0.0014058, -0.0665551, -0.997782, 0.0210701, 0.997559, -0.06657, 0.999777, -0.0211169, -4.37016e-08, -45, 14, -12.5)
+
+[node name="platform-large8" parent="Platform_DoubleJump_2" instance=ExtResource("7_m1cvx")]
+transform = Transform3D(0.991511, 0.130012, 0.00140575, -0.129817, 0.989302, 0.0665551, 0.00726228, -0.0661726, 0.997782, -0.00702953, -0.332775, -4.98891)
+
+[node name="Platform_DoubleJump_1" parent="." instance=ExtResource("7_m1cvx")]
+transform = Transform3D(-4.35645e-08, 0.0819211, -0.996639, 3.58089e-09, 0.996639, 0.0819211, 1, 0, -4.37114e-08, -45, 10, -7.5)
+
+[node name="platform-large9" parent="Platform_DoubleJump_1" instance=ExtResource("7_m1cvx")]
+transform = Transform3D(0.996086, 0.0883506, 0.00264225, -0.088093, 0.994743, -0.0522085, -0.00724102, 0.0517714, 0.998633, 0, 0.409606, -4.9832)
+
+[node name="Platform_Jump_3" parent="." instance=ExtResource("7_m1cvx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -40, 6, 3)
+
+[node name="platform-large9" parent="Platform_Jump_3" instance=ExtResource("7_m1cvx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, 0)
+
+[node name="platform-large10" parent="Platform_Jump_3" instance=ExtResource("7_m1cvx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, -5)
+
+[node name="platform-large11" parent="Platform_Jump_3" instance=ExtResource("7_m1cvx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -5)
+
+[node name="Platform_Jump_2" parent="." instance=ExtResource("7_m1cvx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35, 4, 2.5)
+
+[node name="platform-large11" parent="Platform_Jump_2" instance=ExtResource("7_m1cvx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -5)
+
+[node name="Platform_Jump_1" parent="." instance=ExtResource("7_m1cvx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30, 2, 2.5)
+
+[node name="platform-large8" parent="Platform_Jump_1" instance=ExtResource("7_m1cvx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -5)
+
+[node name="Starting_Platform" parent="." instance=ExtResource("7_m1cvx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.5)
+
+[node name="platform-large4" parent="Starting_Platform" instance=ExtResource("7_m1cvx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, 0)
+
+[node name="platform-large3" parent="Starting_Platform" instance=ExtResource("7_m1cvx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, -5)
+
+[node name="platform-large5" parent="Starting_Platform" instance=ExtResource("7_m1cvx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -5)
+
+[node name="Starting_Platform" parent="Starting_Platform" instance=ExtResource("7_m1cvx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0, 0)
+
+[node name="platform-large6" parent="Starting_Platform" instance=ExtResource("7_m1cvx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 0, 0)
+
+[node name="platform-large7" parent="Starting_Platform" instance=ExtResource("7_m1cvx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 0, -5)
+
+[node name="platform-large8" parent="Starting_Platform" instance=ExtResource("7_m1cvx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0, -5)
+
+[node name="Starting_Platform2" parent="Starting_Platform" instance=ExtResource("7_m1cvx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 0, 0)
+
+[node name="platform-large4" parent="Starting_Platform/Starting_Platform2" instance=ExtResource("7_m1cvx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, 0)
+
+[node name="platform-large3" parent="Starting_Platform/Starting_Platform2" instance=ExtResource("7_m1cvx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, -5)
+
+[node name="platform-large5" parent="Starting_Platform/Starting_Platform2" instance=ExtResource("7_m1cvx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -5)
+
+[node name="platform-medium" parent="Starting_Platform/Starting_Platform2" instance=ExtResource("8_rsjgr")]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 21, 2, -8)
+
+[node name="platform-medium" parent="Starting_Platform/Starting_Platform2/platform-medium" instance=ExtResource("8_rsjgr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 0, 0)
+
+[connection signal="coin_collected" from="Player" to="HUD" method="_on_coin_collected"]
+[connection signal="reached_goal" from="Player" to="HUD" method="_on_player_reached_goal"]
+[connection signal="pressed" from="HUD/Control/PlayAgainButton" to="HUD" method="_on_play_again_button_pressed"]
