@@ -59,7 +59,7 @@ view = NodePath("../View")
 
 [node name="View" type="Node3D" parent="." node_paths=PackedStringArray("target") groups=["View"]]
 process_mode = 3
-transform = Transform3D(0.707107, -0.298836, 0.640856, 0, 0.906308, 0.422618, -0.707107, -0.298836, 0.640856, 0, 0, 0)
+transform = Transform3D(-4.37114e-08, -0.422618, 0.906307, 0, 0.906308, 0.422618, -1, 1.84732e-08, -3.96159e-08, 0, 0, 0)
 script = ExtResource("3_7fy6n")
 target = NodePath("../Player")
 camera_angle_max = 20.0
