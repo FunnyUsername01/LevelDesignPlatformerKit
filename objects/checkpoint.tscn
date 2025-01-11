@@ -24,6 +24,7 @@ jewel_material = SubResource("StandardMaterial3D_15vf6")
 activated_color = Color(0.329412, 0.721569, 0.513726, 1)
 
 [node name="mesh_offset" type="Node3D" parent="."]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
 
 [node name="jewel" parent="mesh_offset" instance=ExtResource("2_025fv")]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0.5, 0)
@@ -36,7 +37,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 0)
 collision_mask = 2
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
-transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0, 0)
 shape = SubResource("BoxShape3D_ekyr4")
 
 [connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
