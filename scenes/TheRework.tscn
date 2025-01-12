@@ -111,19 +111,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, -5)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -5)
 
 [node name="CoinSpawner" parent="World/OnboardingSection/CoinJump_Intro" instance=ExtResource("14_4vl1g")]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -3.6251, 9.5, -6)
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -3.6251, 13.5, -6)
 
 [node name="CoinSpawner2" parent="World/OnboardingSection/CoinJump_Intro" instance=ExtResource("14_4vl1g")]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -3.6251, -2.5, -12)
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -3.6251, 3.5, -10)
 
 [node name="checkpoint2" parent="World/OnboardingSection/CoinJump_Intro" instance=ExtResource("5_1p0yt")]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -3.03003, -4.96609, -12)
 
 [node name="CoinSpawner3" parent="World/OnboardingSection/CoinJump_Intro" instance=ExtResource("14_4vl1g")]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -2.6251, -27.5, -12)
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -2.6251, -28.5, -15)
 
 [node name="CoinSpawner4" parent="World/OnboardingSection/CoinJump_Intro" instance=ExtResource("14_4vl1g")]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -2.6251, -21.5, -9)
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -2.6251, -21.5, -12)
 
 [node name="WallPillar7" parent="World/OnboardingSection/CoinJump_Intro" instance=ExtResource("8_rsjgr")]
 transform = Transform3D(2.98023e-08, 1, -5.96046e-08, 1, -2.98023e-08, -4.37114e-08, -4.37114e-08, -5.96046e-08, -1, -8.62508, -1.90735e-05, -10.0049)
@@ -392,6 +392,33 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3)
 
 [node name="platform-medium6" parent="World/OnboardingSection/Jump_Intro/WallPillar5" instance=ExtResource("8_rsjgr")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.76837e-07, -6)
+
+[node name="JumpWall" parent="World/OnboardingSection/Jump_Intro" instance=ExtResource("8_rsjgr")]
+transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, -38.0872, 7.5, -0.0262232)
+
+[node name="platform-medium3" parent="World/OnboardingSection/Jump_Intro/JumpWall" instance=ExtResource("8_rsjgr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3)
+
+[node name="platform-medium" parent="World/OnboardingSection/Jump_Intro/JumpWall" instance=ExtResource("8_rsjgr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3)
+
+[node name="JumpWall2" parent="World/OnboardingSection/Jump_Intro" instance=ExtResource("8_rsjgr")]
+transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, -33.0872, 4.5, -0.0262232)
+
+[node name="platform-medium3" parent="World/OnboardingSection/Jump_Intro/JumpWall2" instance=ExtResource("8_rsjgr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3)
+
+[node name="platform-medium" parent="World/OnboardingSection/Jump_Intro/JumpWall2" instance=ExtResource("8_rsjgr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3)
+
+[node name="JumpWall3" parent="World/OnboardingSection/Jump_Intro" instance=ExtResource("8_rsjgr")]
+transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, -28.0873, 1.5, -0.0262232)
+
+[node name="platform-medium3" parent="World/OnboardingSection/Jump_Intro/JumpWall3" instance=ExtResource("8_rsjgr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3)
+
+[node name="platform-medium" parent="World/OnboardingSection/Jump_Intro/JumpWall3" instance=ExtResource("8_rsjgr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3)
 
 [node name="Running_Intro" parent="World/OnboardingSection" instance=ExtResource("7_m1cvx")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.5)
@@ -1780,7 +1807,7 @@ autoplay = true
 parameters/looping = true
 
 [node name="checkpoint3" parent="." instance=ExtResource("5_1p0yt")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -42.4049, 43, -87.1005)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -41.4049, 45, -89.1005)
 
 [node name="Platform_Jump_7" parent="." instance=ExtResource("7_m1cvx")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -50, 41, -96.6344)
